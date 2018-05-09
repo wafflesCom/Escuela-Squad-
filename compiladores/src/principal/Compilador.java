@@ -20,10 +20,10 @@ public class Compiladores{
   }
 
   private char siguienteCaracter(){
-	 char c= '';
+	 char c= 0;
 	 if(indice < cadena.lenght()){
 	 c = cadena.charAt(indice);
-	 indice++:
+	 indice++;
 	 }
 	 return c;
   }
@@ -71,7 +71,7 @@ public class Compiladores{
   switch(c){
 	  case 'a': return estado_B();
 	  case 'b': return estado_C();
-          case '' : return aceptar;
+          case ' ' : return aceptar;
 	  default : return error;
   }
   }
