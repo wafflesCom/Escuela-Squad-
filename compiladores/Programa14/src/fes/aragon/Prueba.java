@@ -58,6 +58,7 @@ public class Prueba {
             case 'd':
                 System.out.println(pilas.peek());
                 Object h = 'B';
+                tmp = 'C';
                 if (pilas.peek() == terminal[3]) {
                     pilas.pop();
                     c = get_Char();
@@ -66,7 +67,11 @@ public class Prueba {
                     pilas.pop();
                     evaluar3(c);
                     funciona = true;
-                }else{
+                }else if(pilas.peek() == tmp){
+                    evaluar3(c);
+                    funciona = true;
+                }
+                else{
                 funciona = false;
                 }
                 
@@ -75,6 +80,11 @@ public class Prueba {
                 if (pilas.peek() == terminal[terminal.length-1]) {
                     pilas.pop();
                     JOptionPane.showMessageDialog(null, "Cadena correcta");
+                    
+                }else{
+                    if (!pilas.empty()) {
+                        error();
+                    }
                 }
                 //error();
                 funciona = false;
@@ -203,7 +213,7 @@ public class Prueba {
                 pilas.pop();
             case ';':
                 funciona = false;
-                error();
+                //error();
                 break;
             default:
                 error();
@@ -228,7 +238,7 @@ public class Prueba {
                 ad = terminal[3];
                 pilas.push(ad);
             case ';':
-                error();
+                //error();
                 break;
             default:
                 error();
