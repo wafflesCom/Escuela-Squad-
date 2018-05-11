@@ -48,12 +48,19 @@ public class Prueba {
             case'b':
                 pilas.pop();
                 c = get_Char();
-                System.out.println("aqui");
                 funciona = true;
                 break;
             case 'c':
-                evaluar3(c);
+                tmp = terminal[2];
+                if (pilas.peek() == tmp) {
+                    pilas.pop();
+                c = get_Char();
+                funciona = true;
+                }else{
                 funciona = false;
+                error();
+                }
+                
                 break;
             case 'd':
                 System.out.println(pilas.peek());
@@ -91,6 +98,7 @@ public class Prueba {
                 break;
             default:
                 //error();
+                funciona = false;
                 break;
             }
             System.out.println(pilas);
@@ -170,10 +178,9 @@ public class Prueba {
                 pilas.push(ad);
                 break;
             case 'c':
-                ad = noTerminal[3];
+                ad = terminal[2];
                 pilas.pop();
                 pilas.push(ad);
-                evaluar3(c);
                 break;
             case 'd':
                 pilas.pop();
