@@ -16,8 +16,7 @@ public class Inicio extends javax.swing.JFrame {
     File archivo;
     FileInputStream entrada;
     FileOutputStream salida;
-    public String salidaUsusario = "";
-    public int contCadena = 1;
+    public String salidaUsuario = "";
 
     public Inicio() {
         initComponents();
@@ -57,11 +56,12 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         BuscaArchivo = new javax.swing.JButton();
-        CuadroMatriz = new javax.swing.JTextField();
+        CuadroCadena = new javax.swing.JTextField();
         GuardaArchivo = new javax.swing.JButton();
         ExamCadena = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        Salida = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,7 +73,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        CuadroMatriz.setText("Esperando Matriz...");
+        CuadroCadena.setText("Esperando Cadena...");
 
         GuardaArchivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         GuardaArchivo.setText("Guardar Archivo");
@@ -96,9 +96,17 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        Salida.setColumns(20);
+        Salida.setRows(5);
+        jScrollPane1.setViewportView(Salida);
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Limpiar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -114,11 +122,13 @@ public class Inicio extends javax.swing.JFrame {
                                 .addComponent(BuscaArchivo)
                                 .addGap(18, 18, 18)
                                 .addComponent(GuardaArchivo))
-                            .addComponent(CuadroMatriz)
+                            .addComponent(CuadroCadena)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(ExamCadena)))
+                        .addGap(50, 50, 50)
+                        .addComponent(ExamCadena)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -129,12 +139,14 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(BuscaArchivo)
                     .addComponent(GuardaArchivo))
                 .addGap(18, 18, 18)
-                .addComponent(CuadroMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ExamCadena)
-                .addGap(18, 18, 18)
+                .addComponent(CuadroCadena, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ExamCadena)
+                    .addComponent(jButton1))
+                .addGap(22, 22, 22)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,7 +169,7 @@ public class Inicio extends javax.swing.JFrame {
             if (archivo.canRead()) {
                 if (archivo.getName().endsWith("txt")) {
                     String documento = AbrirArchivo(archivo);
-                    CuadroMatriz.setText(documento);
+                    CuadroCadena.setText(documento);
                 } else {
                     JOptionPane.showMessageDialog(null, "Archivo no compatible");
                 }
@@ -169,7 +181,7 @@ public class Inicio extends javax.swing.JFrame {
         if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
             archivo = seleccionar.getSelectedFile();
             if (archivo.getName().endsWith("txt")) {
-                String Documento = CuadroMatriz.getText();
+                String Documento = CuadroCadena.getText();
                 String mensaje = GuardarArchivo(archivo, Documento);
                 if (mensaje != null) {
                     JOptionPane.showMessageDialog(null, mensaje);
@@ -185,15 +197,15 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_ExamCadenaMouseClicked
 
     private void ExamCadenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExamCadenaActionPerformed
-        // TODO add your handling code here:
-        String cadenas[] = new String[CuadroMatriz.getText().split(" ").length];
-        cadenas = CuadroMatriz.getText().split(" ");
+        salidaUsuario = "";
+        imprimir(salidaUsuario);
+        String cadenas[] = new String[CuadroCadena.getText().split(" ").length];
+        cadenas = CuadroCadena.getText().split(" ");
         for (int i = 0; i < cadenas.length; i++) {
             Programa3 obj = new Programa3();
             Rangos rango = new Rangos();
             obj.sCadena = cadenas[i];
-            imprimir("Cadena #"+(contCadena)+"\n"+obj.sCadena);
-            contCadena++;
+            imprimir("Cadena #"+(i+1)+"\n"+obj.sCadena);
             obj.simbolo = obj.siguienteCaracter();
             while (!obj.valor.equals("aceptar") && obj.error != true) {
                 if (rango.rangoaz_AZ(obj.simbolo)) {
@@ -221,11 +233,17 @@ public class Inicio extends javax.swing.JFrame {
 
             }
         }
+        CuadroCadena.setText("");
     }//GEN-LAST:event_ExamCadenaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CuadroCadena.setText("");
+        Salida.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void imprimir(String txt) {
-        salidaUsusario = salidaUsusario + txt;
-        jTextArea1.setText(salidaUsusario);
+        salidaUsuario = salidaUsuario + txt;
+        Salida.setText(salidaUsuario);
     }
 
     public static void main(String args[]) {
@@ -265,17 +283,18 @@ public class Inicio extends javax.swing.JFrame {
         llamada.setResizable(false);
         llamada.setTitle("Tabla de transicion: estatica ");
         llamada.setVisible(true);
-        llamada.CuadroMatriz.setText("Esperando Cadena...");
-        llamada.CuadroMatriz.setEditable(true);
+        llamada.CuadroCadena.setText("Esperando Cadena...");
+        llamada.CuadroCadena.setEditable(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BuscaArchivo;
-    private javax.swing.JTextField CuadroMatriz;
+    private javax.swing.JTextField CuadroCadena;
     private javax.swing.JButton ExamCadena;
     private javax.swing.JButton GuardaArchivo;
+    private javax.swing.JTextArea Salida;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
